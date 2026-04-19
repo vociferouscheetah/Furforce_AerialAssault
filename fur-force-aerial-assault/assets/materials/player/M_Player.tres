@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://bnfw61rkjcgcq"]
+
+[ext_resource type="Texture2D" uid="uid://bnqiaorn327ul" path="res://assets/textures/Dog/SM_BlackLab_low_Maya_Lambert1SG_BaseColor.png" id="1_7abfp"]
+[ext_resource type="Texture2D" uid="uid://ba66vcio3qymu" path="res://assets/textures/Dog/SM_BlackLab_low_Maya_Lambert1SG_Metallic.png" id="2_5a8vm"]
+[ext_resource type="Texture2D" uid="uid://8ag3con14wpp" path="res://assets/textures/Dog/SM_BlackLab_low_Maya_Lambert1SG_Normal.png" id="3_rm7bx"]
+[ext_resource type="Texture2D" uid="uid://dl43fwkfpkuuu" path="res://assets/textures/Dog/SM_BlackLab_low_Maya_Lambert1SG_Roughness.png" id="4_g0www"]
+
+[resource]
+albedo_texture = ExtResource("1_7abfp")
+metallic = 1.0
+metallic_texture = ExtResource("2_5a8vm")
+roughness_texture = ExtResource("4_g0www")
+normal_enabled = true
+normal_texture = ExtResource("3_rm7bx")

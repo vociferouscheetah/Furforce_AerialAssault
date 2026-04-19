@@ -1,0 +1,74 @@
+[gd_scene load_steps=13 format=3 uid="uid://viftuhlusof4"]
+
+[ext_resource type="Script" uid="uid://djb2k6s6fqxy5" path="res://scripts/player/player_controller.gd" id="1_dovo2"]
+[ext_resource type="Material" uid="uid://bnfw61rkjcgcq" path="res://assets/materials/player/M_Player.tres" id="2_5gtgg"]
+[ext_resource type="Script" uid="uid://cqjnspi65ihr8" path="res://scripts/camera/chase_camera.gd" id="2_gmlin"]
+[ext_resource type="ArrayMesh" uid="uid://s0lc2a03ka" path="res://assets/models/SM_BlackLab_low.obj" id="3_h17s1"]
+[ext_resource type="Script" uid="uid://dxqxh02bep3ih" path="res://scripts/player/player_weapons.gd" id="3_lvxji"]
+[ext_resource type="Material" uid="uid://b8utpgilx2s6n" path="res://assets/materials/player/M_Wings.tres" id="4_je7p5"]
+[ext_resource type="PackedScene" uid="uid://cc8kwp38axhs4" path="res://scenes/projectiles/bullet.tscn" id="4_p47bc"]
+[ext_resource type="ArrayMesh" uid="uid://e2nb87756by4" path="res://assets/models/SM_Wings.obj" id="5_fm80t"]
+[ext_resource type="Script" uid="uid://b1dseexhasbiy" path="res://scripts/systems/health_component.gd" id="6_75vfm"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_x7p2l"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_8afob"]
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_5gtgg"]
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+motion_mode = 1
+script = ExtResource("1_dovo2")
+base_speed = 20.0
+boost_speed = 60.0
+brake_speed = 5.0
+roll_speed = 5.0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_x7p2l")
+
+[node name="PlayerModel" type="Node3D" parent="."]
+
+[node name="BodyMesh" type="MeshInstance3D" parent="PlayerModel"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -2.517243, 1.8749213)
+material_override = ExtResource("2_5gtgg")
+mesh = ExtResource("3_h17s1")
+
+[node name="WingLeft" type="MeshInstance3D" parent="PlayerModel"]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, -2.5125613, 1.7164376)
+material_override = ExtResource("4_je7p5")
+mesh = ExtResource("5_fm80t")
+
+[node name="WingRight" type="MeshInstance3D" parent="PlayerModel"]
+
+[node name="GunLeft" type="Marker3D" parent="PlayerModel"]
+
+[node name="GunRight" type="Marker3D" parent="PlayerModel"]
+
+[node name="ChaseCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.507097, 2.018702)
+far = 100000.0
+script = ExtResource("2_gmlin")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="ChaseCamera"]
+
+[node name="HitboxArea" type="Area3D" parent="."]
+collision_layer = 8
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxArea"]
+shape = SubResource("CapsuleShape3D_8afob")
+
+[node name="EngineParticles" type="GPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.9133434)
+process_material = SubResource("ParticleProcessMaterial_5gtgg")
+
+[node name="MuzzleFlash" type="GPUParticles3D" parent="."]
+
+[node name="Weapons" type="Node" parent="."]
+script = ExtResource("3_lvxji")
+bullet_scene = ExtResource("4_p47bc")
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("6_75vfm")

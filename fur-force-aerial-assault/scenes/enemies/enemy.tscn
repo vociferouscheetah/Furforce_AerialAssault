@@ -1,0 +1,65 @@
+[gd_scene load_steps=11 format=3 uid="uid://1cejp0daajdw"]
+
+[ext_resource type="Script" uid="uid://cjj48slwu85fn" path="res://scripts/enemies/enemy_controller.gd" id="1_8e3ao"]
+[ext_resource type="Script" uid="uid://b1dseexhasbiy" path="res://scripts/systems/health_component.gd" id="2_38ino"]
+[ext_resource type="PackedScene" uid="uid://cc8kwp38axhs4" path="res://scenes/projectiles/bullet.tscn" id="2_fcftc"]
+[ext_resource type="Material" uid="uid://0kpjs4eljqg6" path="res://assets/materials/player/M_Cat.tres" id="3_jt03m"]
+[ext_resource type="ArrayMesh" uid="uid://dcacqo2mgs2sf" path="res://assets/models/SM_Cat_Lo.obj" id="4_n7575"]
+[ext_resource type="Material" uid="uid://b8utpgilx2s6n" path="res://assets/materials/player/M_Wings.tres" id="5_qch6t"]
+[ext_resource type="ArrayMesh" uid="uid://e2nb87756by4" path="res://assets/models/SM_Wings.obj" id="6_y5th1"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ykcao"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_38ino"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_fcftc"]
+
+[node name="Enemy" type="CharacterBody3D"]
+collision_layer = 4
+motion_mode = 1
+script = ExtResource("1_8e3ao")
+patrol_speed = 10.0
+pursue_speed = 15.0
+turn_speed_patrol = 2.0
+turn_speed_pursue = 2.5
+bullet_scene = ExtResource("2_fcftc")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CapsuleShape3D_ykcao")
+
+[node name="EnemyModel" type="Node3D" parent="."]
+
+[node name="BodyMesh" type="MeshInstance3D" parent="EnemyModel"]
+transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 0.5, 0, 4.371139e-08, 0, -0.5, 0, -1.3331444, 0)
+material_override = ExtResource("3_jt03m")
+mesh = ExtResource("4_n7575")
+
+[node name="GunMarker" type="Marker3D" parent="EnemyModel"]
+
+[node name="WingMesh" type="MeshInstance3D" parent="EnemyModel"]
+transform = Transform3D(-0.5, 0, -4.371139e-08, 0, 0.5, 0, 4.371139e-08, 0, -0.5, 0, -1.2409081, 0)
+material_override = ExtResource("5_qch6t")
+mesh = ExtResource("6_y5th1")
+
+[node name="HitboxArea" type="Area3D" parent="."]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="HitboxArea"]
+shape = SubResource("CapsuleShape3D_38ino")
+
+[node name="DetectionZone" type="Area3D" parent="."]
+collision_layer = 128
+collision_mask = 2
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DetectionZone"]
+transform = Transform3D(75, 0, 0, 0, 75, 0, 0, 0, 75, 0, -0.21934485, 0)
+shape = SubResource("SphereShape3D_fcftc")
+
+[node name="NavigationAgent3D" type="NavigationAgent3D" parent="."]
+
+[node name="EngineParticles" type="GPUParticles3D" parent="."]
+
+[node name="HealthComponent" type="Node" parent="."]
+script = ExtResource("2_38ino")
+max_health = 10.0

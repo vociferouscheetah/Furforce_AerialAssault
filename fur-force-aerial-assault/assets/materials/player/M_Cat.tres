@@ -1,0 +1,14 @@
+[gd_resource type="StandardMaterial3D" load_steps=5 format=3 uid="uid://0kpjs4eljqg6"]
+
+[ext_resource type="Texture2D" uid="uid://ba25t2mo61ab6" path="res://assets/textures/Cat/SM_Cat_Lo_lambert1SG_BaseColor.png" id="1_mevoj"]
+[ext_resource type="Texture2D" uid="uid://ca0ksed1kp2kh" path="res://assets/textures/Cat/SM_Cat_Lo_lambert1SG_Metallic.png" id="2_hi5hn"]
+[ext_resource type="Texture2D" uid="uid://bxxc1fv5gvhlf" path="res://assets/textures/Cat/SM_Cat_Lo_lambert1SG_Normal.png" id="3_qoc7c"]
+[ext_resource type="Texture2D" uid="uid://c4khgwv5hfjcy" path="res://assets/textures/Cat/SM_Cat_Lo_lambert1SG_Roughness.png" id="4_yq41j"]
+
+[resource]
+albedo_texture = ExtResource("1_mevoj")
+metallic = 1.0
+metallic_texture = ExtResource("2_hi5hn")
+roughness_texture = ExtResource("4_yq41j")
+normal_enabled = true
+normal_texture = ExtResource("3_qoc7c")

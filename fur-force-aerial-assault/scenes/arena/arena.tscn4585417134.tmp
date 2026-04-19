@@ -1,0 +1,61 @@
+[gd_scene load_steps=10 format=3 uid="uid://c8of53uijq5f5"]
+
+[ext_resource type="Script" uid="uid://cet4rui4bolfh" path="res://scripts/arena/arena_boundary.gd" id="1_1qjuf"]
+[ext_resource type="Script" uid="uid://bghwge64bf7lv" path="res://scripts/enemies/enemy_spawner.gd" id="2_5tue2"]
+[ext_resource type="Script" uid="uid://bi1cb6k30d234" path="res://scripts/arena/cloud_spawner.gd" id="2_aj7ud"]
+[ext_resource type="PackedScene" uid="uid://1cejp0daajdw" path="res://scenes/enemies/enemy.tscn" id="3_aj7ud"]
+[ext_resource type="Script" uid="uid://cv4sdoqhvfa7w" path="res://scripts/arena/ocean.gd" id="5_asdgj"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_1qjuf"]
+sky_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+ground_horizon_color = Color(0.66224277, 0.6717428, 0.6867428, 1)
+
+[sub_resource type="Sky" id="Sky_8trdl"]
+sky_material = SubResource("ProceduralSkyMaterial_1qjuf")
+
+[sub_resource type="Environment" id="Environment_5tue2"]
+background_mode = 2
+sky = SubResource("Sky_8trdl")
+tonemap_mode = 2
+glow_enabled = true
+fog_enabled = true
+fog_mode = 1
+fog_density = 1.0
+fog_depth_begin = 50.0
+fog_depth_end = 10000.0
+volumetric_fog_albedo = Color(1.540184e-06, 0.6605717, 0.6608302, 1)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_n62jo"]
+
+[node name="Arena" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_5tue2")
+
+[node name="ArenaBoundary" type="StaticBody3D" parent="."]
+collision_mask = 0
+script = ExtResource("1_1qjuf")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="ArenaBoundary"]
+transform = Transform3D(500, 0, 0, 0, 500, 0, 0, 0, 500, 0, 0, 0)
+shape = SubResource("SphereShape3D_n62jo")
+
+[node name="SkyDome" type="MeshInstance3D" parent="."]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="CloudSpawner" type="Node3D" parent="."]
+script = ExtResource("2_aj7ud")
+cloud_count = 200
+spawn_radius = 2000.0
+
+[node name="EnemySpawner" type="Node3D" parent="."]
+script = ExtResource("2_5tue2")
+enemy_scene = ExtResource("3_aj7ud")
+enemy_count = 200
+
+[node name="Ocean" type="Node3D" parent="."]
+script = ExtResource("5_asdgj")
+ocean_size = 20000.0
+subdivisions = 400
+ocean_y = -2000.0
